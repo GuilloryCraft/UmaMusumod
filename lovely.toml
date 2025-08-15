@@ -1,0 +1,22 @@
+
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''
+idol_card = {suit = 'Spades', rank = 'Ace'},
+mail_card = {rank = 'Ace'},
+ancient_card = {suit = 'Spades'},
+'''
+position = 'after'
+payload = '''
+ship_card = {rank = 'Ace', id = 14},
+legacy_card = {suit1 = 'Hearts', suit2 = 'Spades'},
+'''
+match_indent = true

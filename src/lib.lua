@@ -1,0 +1,4 @@
+UmaMusumod = {}
+UmaMusumod.INIT = {
+    Jokers = {}
+}

@@ -1,0 +1,16 @@
+{
+	"id": "umamusumod",
+	"name": "UmaMusumod",
+	"display_name": "Uma Musumod",
+	"author": ["CampfireCollective & dottykitty"],
+	"description": "15 Uma Musume jokers to enjoy :)",
+	"prefix": "Uma",
+	"main_file": "src/trainingplan.lua",
+	"priority": 2,
+	"badge_colour": "FFBCDA",
+	"badge_text_colour": "EEEEEE",
+	"version": "0.1.0",
+	"dependencies": [
+		"Steamodded (>=1.0.0~BETA-0404a)" 
+	]
+}

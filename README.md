@@ -1,2 +1,10 @@
-# UmaMusumod
-A Balatro mod featuring 15 Jokers related to Uma Musume
+Uma Musumod - a coupla horse girls to play with :)
+
+Features:
+15 jokers! Yippee
+
+Programming:
+- CampfireCollective
+
+Art:
+- dottykitty
