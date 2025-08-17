@@ -438,7 +438,7 @@ SMODS.Joker{ --Bakushin
     key = "bakushin",
     config = {
         extra = {
-            mult = 15
+            mult = 17
         }
     },
     loc_txt = {
@@ -566,8 +566,39 @@ SMODS.Joker{ --Tokai Teio
     end,
 
     calculate = function(self, card, context)
-        if context.destroying_card and G.GAME.current_round.hands_left == 0 and not context.blueprint then
-            return true
+        if context.before and G.GAME.current_round.hands_left == 0 and not context.blueprint then
+            for k, v in ipairs(context.scoring_hand) do
+                v.destroyed = true
+            end
+
+        elseif context.destroying_card and G.GAME.current_round.hands_left == 0 and not context.blueprint then
+            if context.destroying_card.destroyed then
+                return true
+            end
+
+        elseif context.after and G.GAME.current_round.hands_left == 0 and not context.blueprint then
+            local destroyed_cards = {}
+            for k, v in ipairs(context.full_hand) do
+                if v ~= nil and not v.destroyed then
+                    destroyed_cards[#destroyed_cards+1] = v
+                end
+            end
+            for j=1, #G.jokers.cards do
+                eval_card(G.jokers.cards[j], {cardarea = G.jokers, remove_playing_cards = true, removed = destroyed_cards})
+            end
+            for k, v in ipairs(destroyed_cards) do
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        if v.ability.name == 'Glass Card' then 
+                            v:shatter()
+                        else
+                            v:start_dissolve()
+                        end
+                    return true
+                    end
+                }))
+            end
+            
 
         elseif context.end_of_round and G.GAME.current_round.hands_left == 0 and not context.blueprint and not context.individual and not context.repetition then
             card.ability.extra.fractures = card.ability.extra.fractures - 1
@@ -602,7 +633,7 @@ SMODS.Joker{ --TM Opera O
     config = {
         extra = {
             Xmult = 1,
-            Xmult_mod = 0.4
+            Xmult_mod = 0.25
         }
     },
     loc_txt = {
@@ -718,7 +749,7 @@ SMODS.Joker{ --Maruzensky
     key = "maruzensky",
     config = {
         extra = {
-            Xmult_mod = 0.5
+            Xmult_mod = 0.25
         }
     },
     loc_txt = {
@@ -908,7 +939,8 @@ SMODS.Joker{ --Vodka x Daiwa Scarlet agenda
             [2] = 'contains both a scoring',
             [3] = '{V:1}#1#{} and {V:2}#2#{} card,',
             [4] = 'then upgrade level of',
-            [5] = 'played poker hand'
+            [5] = 'played poker hand',
+            [6] = '{C:inactiv}Suits change each round'
         }
     },
     pos = {
